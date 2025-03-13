@@ -1,0 +1,10 @@
+streamlit
+numpy
+pandas
+scipy
+matplotlib
+plotly
+seaborn
+datetime
+yfinance
+streamlit_extras
