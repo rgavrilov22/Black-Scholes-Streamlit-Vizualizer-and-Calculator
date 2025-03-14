@@ -119,9 +119,15 @@ def plot_greeks(riskfree, Spot, eXercise, time, stdev, type, greek):
     fig.add_trace(go.Scatter(x=stock_prices, y=greek_values, mode='lines', name=f'{greek.capitalize()}', line=dict(color=line_color, width=3)))
     fig.add_trace(go.Scatter(x=[Spot], y=[current_greek_value], mode='markers', name=f'Current {greek.capitalize()}', marker=dict(color='white', size=9)))
     
-    fig.update_layout(title=f'{greek.capitalize()} vs Spot Price ({type})',
+    if greek in ['gamma','vega']:
+        fig.update_layout(title=f'{greek.capitalize()} vs Spot Price',
                       xaxis_title='Spot Price',
                       yaxis_title=greek.capitalize())
+    else:
+        fig.update_layout(title=f'{greek.capitalize()} vs Spot Price ({type})',
+                      xaxis_title='Spot Price',
+                      yaxis_title=greek.capitalize())
+    
     return fig
 
 def main():
@@ -215,7 +221,7 @@ def main():
     graphs = []
     for greek in greek_types:
         if greek in ['gamma', 'vega']:
-            graphs.append(plot_greeks(r, S, X, t, sigma, "Call", greek))
+            graphs.append(plot_greeks(r, S, X, t, sigma, 'Call',greek))
         else:
             for option_type in option_types:
                 graphs.append(plot_greeks(r, S, X, t, sigma, option_type, greek))
